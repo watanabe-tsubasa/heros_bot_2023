@@ -1,26 +1,28 @@
-import { Client, ClientConfig, MessageAPIResponseBase, TextMessage, WebhookEvent } from "@line/bot-sdk";
-import { gptReply } from "./gptReply";
-
-const clientConfig: ClientConfig = {
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN || 'copy_paste_here',
-  channelSecret: process.env.CHANNEL_SECRET || 'copy_paste_here',
-};
-const client = new Client(clientConfig);
+import { Client, ClientConfig, MessageAPIResponseBase, WebhookEvent } from "@line/bot-sdk";
+import { createFish, growUpFish, rebirthFish, struggleToInvader } from "./lineFuncs";
 
 export const textEventHandler = async (event: WebhookEvent): Promise<MessageAPIResponseBase | undefined> => {
   if (event.type !== 'message' || event.message.type !== 'text') {
     return;
   }
+  const { userId } = event.source;
   const { replyToken } = event;
   const { text } = event.message;
-  // console.log(text);
-  const evaluateResult = await gptReply(text);
-  const replyMessage = JSON.stringify(evaluateResult);
 
-  const response: TextMessage = {
-    type: 'text',
-    text: replyMessage
-  };
+  switch (text) {
+    case '生み出す':
+      createFish(userId, replyToken, text);
+      break;
+    case '釣り人':
+    case 'まぐろ漁船':
+      struggleToInvader(userId, replyToken, text);
+      break;
+    case '転生する':
+      rebirthFish(userId, replyToken, text);
+      break;
+    default:
+      growUpFish(userId, replyToken, text);
+      break;
+  }
 
-  await client.replyMessage(replyToken, response);
 }
