@@ -10,6 +10,7 @@ const client = new Client(clientConfig);
 export const createFish = async (userId:string, replyToken: string, text: string) => {
   console.log('createFish');
   // kintone上にデータを作成し、全初期ステータスが0のデータを作り、ししゃもの絵を描く
+  const { displayName } = await client.getProfile(userId);
 }
 
 export const growUpFish = async (userId:string, replyToken: string, text: string) => {
@@ -47,7 +48,7 @@ export const rebirthFish = async (userId:string, replyToken: string, text: strin
   // database:（isTrained = true&&isBattled = true のとき isTrained = false, isBattled = false, rebirthCount++）にし、新たにししゃもの絵を描く
   console.log('rebirthFish');
 
-  const replyMessage = '生き残ったししゃもはたくさんの卵を残し、次の世代に力を引き継ぎました';
+  const replyMessage = '生き残ったししゃもはたくさんの卵を残し、次の世代に力を引き継ぎました'; //ステータスによって、9,000-13,000個の卵を表示
 
   const response: TextMessage = {
     type: 'text',
