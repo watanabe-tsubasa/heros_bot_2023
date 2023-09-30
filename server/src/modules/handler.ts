@@ -13,12 +13,13 @@ export const textEventHandler = async (event: WebhookEvent): Promise<MessageAPIR
   }
   const { replyToken } = event;
   const { text } = event.message;
-  console.log(text);
-  // const replyText = await gptReply(text);
-  
+  // console.log(text);
+  const evaluateResult = await gptReply(text);
+  const replyMessage = JSON.stringify(evaluateResult);
+
   const response: TextMessage = {
     type: 'text',
-    text: text
+    text: replyMessage
   };
 
   await client.replyMessage(replyToken, response);
