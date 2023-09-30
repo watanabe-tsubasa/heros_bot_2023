@@ -5,11 +5,14 @@
     "bun-types": "latest"
   },
   "dependencies": {
-    "@types/node": "^20.7.2",
-    "hono": "^2.2.5"
+    "@line/bot-sdk": "^7.7.0",
+    "axios": "^1.5.1",
+    "hono": "^3.7.2",
+    "openai": "^4.11.0"
   },
   "scripts": {
-    "start": "bun run src/index.ts"
+    "start": "bun run src/index.ts",
+    "dev": "bun run --hot src/index.ts"
   },
   "module": "src/index.js"
 }
