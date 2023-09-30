@@ -1,5 +1,6 @@
 import { Client, ClientConfig, TextMessage } from "@line/bot-sdk";
 import { gptReply } from "./gptReply";
+import { setInitialData, updateParams } from "../kintoneFunc";
 
 const clientConfig: ClientConfig = {
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN || 'copy_paste_here',
@@ -11,10 +12,17 @@ export const createFish = async (userId:string, replyToken: string, text: string
   console.log('createFish');
   // kintone上にデータを作成し、全初期ステータスが0のデータを作り、ししゃもの絵を描く
   const { displayName } = await client.getProfile(userId);
+  await setInitialData(userId, displayName);
+  const response: TextMessage = {
+    type: 'text',
+    text: '育成するししゃもが生成されました\n泣く子も黙る言葉をかけてししゃもを強くしましょう'
+  };
+  await client.replyMessage(replyToken, response)
 }
 
 export const growUpFish = async (userId:string, replyToken: string, text: string) => {
   const evaluateResult = await gptReply(text);
+  await updateParams(userId, evaluateResult);
   const replyMessage = 'あなたの言葉でししゃもは強く育ちました。\n侵略者と戦いましょう'; // カルーセルで釣り人とまぐろ漁船を選ばせる
 
   const response: TextMessage = {

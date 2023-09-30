@@ -1,7 +1,7 @@
 import { OpenAI } from "openai";
 import { systemPrompt } from "../utils/systemPrompt";
 import { gptFunc } from "../utils/gptFunc";
-import gptResult from "../utils/types";
+import gptResult from "../utils/types/gptTypes";
 
 export const gptReply = async (userMessage:string): Promise<gptResult> => {
   const openai = new OpenAI();
