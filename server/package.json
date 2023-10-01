@@ -9,6 +9,7 @@
     "@kintone/rest-api-client": "^4.1.1",
     "@line/bot-sdk": "^7.7.0",
     "axios": "^1.5.1",
+    "bun": "^1.0.3",
     "hono": "^3.7.3",
     "openai": "^4.11.0"
   },
