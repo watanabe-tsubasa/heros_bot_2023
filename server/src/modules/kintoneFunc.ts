@@ -26,7 +26,7 @@ type extendGptResult = gptResult & {
 export const getAllRecords = async (): Promise<kintoneRecordTypes[]> => {
   try {
     const res = await client.record.getAllRecords({
-      app: app
+      app: app!
     });
     return res as kintoneRecordTypes[];
   } catch(err) {
@@ -38,7 +38,7 @@ export const getAllRecords = async (): Promise<kintoneRecordTypes[]> => {
 export const getSpecificIdRcord = async (id: string): Promise<kintoneRecordTypes[]> => {
   try {
     const res = await client.record.getAllRecords({
-      app: app
+      app: app!
     });
     const filteredRes = res.filter(elem => elem.userId.value === id)
     return filteredRes as kintoneRecordTypes[];
@@ -51,7 +51,7 @@ export const getSpecificIdRcord = async (id: string): Promise<kintoneRecordTypes
 export const getIsExistId = async (id: string): Promise<boolean> => {
   try {
     const res = await client.record.getAllRecords({
-      app: app
+      app: app!
     });
     const filteredRes = res.filter(elem => elem.userId.value === id)
     if (filteredRes.length > 0) {
@@ -68,7 +68,7 @@ export const getIsExistId = async (id: string): Promise<boolean> => {
 export const getIsTrained = async (id: string): Promise<boolean> => {
   try {
     const res = await client.record.getAllRecords({
-      app: app
+      app: app!
     });
     const filteredRes = res.filter(elem => elem.userId.value === id)
     const { isTrained } = filteredRes[0];
@@ -86,7 +86,7 @@ export const getIsTrained = async (id: string): Promise<boolean> => {
 export const getIsBattled = async (id: string): Promise<boolean> => {
   try {
     const res = await client.record.getAllRecords({
-      app: app
+      app: app!
     });
     const filteredRes = res.filter(elem => elem.userId.value === id)
     const { isBattled } = filteredRes[0];
@@ -106,9 +106,13 @@ export const getIsBattled = async (id: string): Promise<boolean> => {
 export const getParams = async (id: string): Promise<extendGptResult> => {
   try {
     const res = await client.record.getAllRecords({
-      app: app
+      app: app!
     });
     const filteredRes = res.filter(elem => elem.userId.value === id)
+    // if (filteredRes.length === 0) {
+    //   throw new Error('User not found.');
+    // }
+    console.log(filteredRes)
     const {
       overwhelmingPresence,
       powerfulVoiceOrSound,
@@ -147,7 +151,7 @@ export const setInitialData = async (id: string, name: string) => {
   };
 
   try {
-    await client.record.addRecord({app, record});
+    await client.record.addRecord({app: app!, record});
   } catch(err) {
     console.error(err);
   };
@@ -187,7 +191,7 @@ export const updateParams = async (
 
   try {
     await client.record.updateRecord({
-      app: app,
+      app: app!,
       id: specificRecords[0].$id.value,
       record: record
     });
@@ -200,7 +204,7 @@ export const updateParams = async (
 export const deleteData = async(id: string) => {
   const specificRecords = await getSpecificIdRcord(id);
   try {
-    await client.record.deleteRecords({app: app, ids: [specificRecords[0].$id.value]})
+    await client.record.deleteRecords({app: app!, ids: [specificRecords[0].$id.value]})
   } catch(err) {
     console.error(err);
     throw err;
@@ -218,7 +222,7 @@ export const finishCycle = async (id: string) => {
 
   try {
     await client.record.updateRecord({
-      app: app,
+      app: app!,
       id: specificRecords[0].$id.value,
       record: record
     });
@@ -245,7 +249,7 @@ export const toNextCycle = async (id: string) => {
 
   try {
     await client.record.updateRecord({
-      app: app,
+      app: app!,
       id: specificRecords[0].$id.value,
       record: record
     });

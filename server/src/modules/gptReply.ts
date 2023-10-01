@@ -22,7 +22,7 @@ export const gptReply = async (userMessage:string): Promise<gptResult> => {
   });
 
   const resultJsonString: string = completion.choices[0].finish_reason === "function_call"
-  ? completion.choices[0].message.function_call.arguments
+  ? completion.choices[0].message.function_call!.arguments
   : "{\n  \"overwhelmingPresence\": 2,\n  \"powerfulVoiceOrSound\": 2,\n  \"intenseActions\": 2,\n  \"auraOfAwe\": 2,\n  \"impactOnSurroundings\": 2\n}"
 
   const parsedResult: gptResult = JSON.parse(resultJsonString);

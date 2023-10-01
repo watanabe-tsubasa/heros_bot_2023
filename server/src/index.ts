@@ -1,7 +1,9 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { serveStatic } from "hono/bun";
 import { WebhookEvent } from "@line/bot-sdk";
 import { textEventHandler } from "./modules/handler";
+import { getParams } from "./modules/kintoneFunc";
 
 
 const portString = process.env.PORT;
@@ -32,6 +34,14 @@ app.post("/webhook", async (c) => {
   );
   return c.json({ message: "ok" });
 });
+
+app.get('/api/v1/*', cors())
+
+app.get("/api/v1/:lineId", async (c) => {
+  const userId = c.req.param('lineId');
+  const params = await getParams(userId);
+  return c.json(params);
+})
 
 console.log(`Running at http://localhost:${port}`);
 
