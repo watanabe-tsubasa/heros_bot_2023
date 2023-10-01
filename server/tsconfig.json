@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "lib": ["ESNext"],
-    "module": "CommonJS",
-    "target": "es2020",
+    "module": "ESNext",
+    "target": "ESNext",
     "moduleResolution": "node",
     // "bun-types" is the important part
     "types": ["bun-types"],
