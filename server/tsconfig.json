@@ -6,6 +6,7 @@
     "moduleResolution": "node",
     // "bun-types" is the important part
     "types": ["bun-types"],
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "skipLibCheck": true
   }
 }
