@@ -12,8 +12,9 @@
     "openai": "^4.11.0"
   },
   "scripts": {
-    "start": "bun run src/index.ts",
-    "dev": "bun run --hot src/index.ts"
+    "start": "node dist/index.js",
+    "dev": "bun run --hot src/index.ts",
+    "build": "tsc"
   },
   "module": "src/index.js"
 }
