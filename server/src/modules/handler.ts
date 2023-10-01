@@ -9,8 +9,15 @@ export const textEventHandler = async (event: WebhookEvent): Promise<MessageAPIR
   const { userId } = event.source;
   const { replyToken } = event;
   const { text } = event.message;
+  
+  if (!userId) {
+    // userIdがundefinedの場合の処理をここに書く。
+    // 例: エラーメッセージを返す、ログを出力する、等。
+    console.error('userId is undefined.');
+    return;
+  }
+  
   const isExist = await getIsExistId(userId);
-
   if (isExist) {
     // userIdがkintone上に存在する場合
     switch (text) {
