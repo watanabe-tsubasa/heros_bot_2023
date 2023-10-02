@@ -90,7 +90,7 @@ export const growUpFish = async (userId:string, replyToken: string, text: string
             {
               "type": "message",
               "label": "戦う",
-              "text": "釣り人"
+              "text": "まぐろ漁船"
             },
           ]
         }
